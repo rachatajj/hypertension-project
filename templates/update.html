@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<style media="screen">
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 730px;
+      background-color: transparent;
+      border:none;
+    }
+  }
+  .container-narrow > hr {
+    margin: 30px 0;
+  }
+
+</style>
+<div class="container">
+    <center><h1 class="well">แก้ไขข้อมูลส่วนตัว</h1></center>
+    <hr>
+	<div class="col-lg-12 well" style="padding-top:50px;">
+	<div class="row">
+				<form action="{{ url_for('update') }}" method="POST" class="table-info" style="padding-top:50px;height:460px;">
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label>ชื่อผู้ใช้</label>
+								<input type="text" class="form-control"  style="background-color:white;font-size:20px" value="{{ username }}" disabled>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>ชื่อ-นามสกุล</label>
+								<input type="text"  name="name" class="form-control"  style="background-color:white;font-size:20px" value="{{ name }}" disabled>
+							</div>
+						</div>
+            <div class="row">
+            <div class="col-sm-6 form-group">
+  						<label>วันเดือนปีเกิด</label>
+  						<input type="date"   name="date"  class="form-control" value="{{birthdate}}">
+  					</div>
+            <div class="col-sm-6 form-group">
+  						<label>หมู่เลือด</label>
+              <select name="select" class="form-control" style="font-size:20px">
+                <option  value="{{ blood_type }}">{{ blood_type }}</option>
+                <option  value="เอ">เอ</option>
+                <option  value="บี">บี</option>
+                <option  value="โอ">โอ</option>
+                <option  value="เอบี">เอบี</option>
+              </select>
+  					</div>
+            </div>
+						<div class="row">
+							<div class="col-sm-4 form-group">
+								<label>น้ำหนัก</label>
+								<input type="number" name="weight" required="required" pattern="[0-9]{1,5}" class="form-control" style="font-size:20px" value="{{ weight }}">
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>ส่วนสูง</label>
+								<input type="number"  name="height" required="required" pattern="[0-9]{1,5}" class="form-control" style="font-size:20px" value="{{ height }}">
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>ดัชนีมวลกาย</label>
+								<input type="text" name="bmi" style="background-color:white;font-size:20px" class="form-control" value="{{ bmi }}" disabled>
+							</div>
+						</div>
+					<button type="submit" class="btn btn-lg btn-warning btn-block" style="width:620px;color:white">แก้ไข</button>
+
+					</div>
+          <div style="padding:5px 0px 0px 15px;">
+            <a href="/home"><button type="button" class="btn btn-lg btn-info btn-block" style="width:620px;color:white">ยกเลิก</button></a>
+            </div>
+        </form>
+				</div>
+	</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <style media="screen">
+    @media (min-width: 768px) {
+      .container {
+        max-width: 1200px;
+        background-color: transparent;
+        border:none;
+      }
+    }
+    .container-narrow > hr {
+      margin: 30px 0;
+    }
+
+  </style>
+  <head>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jsPDF/dist/jspdf.min.js"></script>
+
+
+  </head>
+  <body>
+
+
+  <center><h1 style="padding-top:50px" >จัดการโมเดลประเมินอาการและระดับความรุนแรงของโรคความดันโลหิตสูง</h1></center>
+  <hr>
+  <div class="container-fluid">
+    <label for="">เลือกจำนวนแถว</label>
+      <div class="row">
+          <div class="input col-md-1 col-xs-2 form-group ">
+              <!--		Show Numbers Of Rows 		-->
+              <select class="form-control" name="state" id="maxRows" style="width:150px;">
+                  <option value="5000">แสดงทั้งหมด</option>
+                  <option value="3">3</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+              </select>
+          </div>
+      </div>
+
+      <table  class="table" id="Table" >
+          <tr class="bg-info" style="color:white;">
+            <th>ชื่อโมเดลพยากรณ์</th>
+            <th>ประเภท</th>
+            <th>สถานะ</th>
+            <th><center>ควบคุม</center></th>
+          </tr>
+
+          {% for row in data1 %}
+          <tr class="table-info">
+              <td>{{row.nameModel}}</td>
+              <td>{{row.type}}</td>
+              <td>{{row.status}}</td>
+              {% if row.status == 'ปิด' %}
+              <td><center><a href="manageModel/{{row.nameModel}}" class="btn btn-warning">เปิดใช้งาน</a></td>
+              {% elif row.status == 'เปิดใช้งาน' %}
+              <td><center><img src="https://www.234.in.th/images/2020/02/07/2e8e15fe88c0481d1.png"></center></td>
+              {% endif %}
+          </tr>
+          {% endfor %}
+              </table>
+              <div>
+                     <ul class="pagination" />
+              </div>
+              <form action="" method="POST" style="padding-top:50px">
+                <input type="submit" name="" value="สร้างโมเดลใหม่" class="btn btn-lg btn-info btn-block">
+                </form>
+          </div>
+
+
+  </body>
+  <script>
+    function convert_HTML_To_PDF(){
+      var doc = new jsPDF();
+      var elementHTML = $('#content').html();
+      console.log(elementHTML)
+      var specialElementHandlers = {
+          '#elementH' : function(element,renderer){
+              return true;
+          }
+      };
+      doc.fromHTML(elementHTML ,15 ,15, {
+        'width' : 170,
+        'elementHandlers' : specialElementHandlers
+      });
+      doc.save('sample-document.pdf')
+    }
+
+    $(document).ready(function () {
+      //convert_HTML_To_PDF();
+    getPagination('#Table');
+    $('#maxRows option:last').prop('selected', true).trigger('change');
+  });
+
+  function getPagination(table) {
+
+    $('#maxRows').on('change', function(e) {
+      $('.pagination').html(''); // reset pagination
+      var trnum = 0; // reset tr counter
+      var maxRows = parseInt($(this).val()); // get Max Rows from select option
+      var totalRows = $(table + ' tbody tr').length; // numbers of rows
+      $(table + ' tr:gt(0)').each(function() { // each TR in  table and not the header
+        trnum++; // Start Counter
+        if (trnum > maxRows) { // if tr number gt maxRows
+
+          $(this).hide(); // fade it out
+        }
+        if (trnum <= maxRows) {
+          $(this).show();
+        } // else fade in Important in case if it ..
+      }); //  was fade out to fade it in
+      if (totalRows > maxRows) { // if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+        //	numbers of pages
+        for (var i = 1; i <= pagenum;) { // for each page append pagination li
+          $('.pagination').append('<li class"wp" data-page="' + i + '">\
+  <span>' + i++ + '<span class="sr-only">(current)</span></span>\
+  </li>').show();
+        } // end for i
+      } // end if row count > max rows
+      $('.pagination li:first-child').addClass('active'); // add active class to the first li
+      $('.pagination li').on('click', function() { // on click each page
+        var pageNum = $(this).attr('data-page'); // get it's number
+        var trIndex = 0; // reset tr counter
+        $('.pagination li').removeClass('active'); // remove active class from all li
+        $(this).addClass('active'); // add active class to the clicked
+        $(table + ' tr:gt(0)').each(function() { // each tr in table not the header
+          trIndex++; // tr index counter
+          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+          if (trIndex > (maxRows * pageNum) || trIndex <= ((maxRows * pageNum) - maxRows)) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          } //else fade in
+        }); // end of for each tr in table
+      }); // end of on click pagination list
+
+
+    });
+
+    // end of on select change
+
+
+
+    // END OF PAGINATION
+  }$(document).ready(function () {
+    getPagination('#Table');
+    $('#maxRows option:first-child').prop('selected', true).trigger('change');
+  });
+
+  function getPagination(table) {
+
+    $('#maxRows').on('change', function(e) {
+      $('.pagination').html(''); // reset pagination
+      var trnum = 0; // reset tr counter
+      var maxRows = parseInt($(this).val()); // get Max Rows from select option
+      var totalRows = $(table + ' tbody tr').length; // numbers of rows
+      $(table + ' tr:gt(0)').each(function() { // each TR in  table and not the header
+        trnum++; // Start Counter
+        if (trnum > maxRows) { // if tr number gt maxRows
+
+          $(this).hide(); // fade it out
+        }
+        if (trnum <= maxRows) {
+          $(this).show();
+        } // else fade in Important in case if it ..
+      }); //  was fade out to fade it in
+      if (totalRows > maxRows) { // if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+        //	numbers of pages
+        for (var i = 1; i <= pagenum;) { // for each page append pagination li
+          $('.pagination').append('<li  data-page="' + i + '">\
+  <span>' + i++ + '<span class="border border-success">()</span></span>\
+  </li>').show();
+        } // end for i
+      } // end if row count > max rows
+      $('.pagination li:first-child').addClass('active'); // add active class to the first li
+      $('.pagination li').on('click', function() { // on click each page
+        var pageNum = $(this).attr('data-page'); // get it's number
+        var trIndex = 0; // reset tr counter
+        $('.pagination li').removeClass('active'); // remove active class from all li
+        $(this).addClass('active'); // add active class to the clicked
+        $(table + ' tr:gt(0)').each(function() { // each tr in table not the header
+          trIndex++; // tr index counter
+          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+          if (trIndex > (maxRows * pageNum) || trIndex <= ((maxRows * pageNum) - maxRows)) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          } //else fade in
+        }); // end of for each tr in table
+      }); // end of on click pagination list
+
+
+    });
+
+    // end of on select change
+
+
+
+    // END OF PAGINATION
+  }$(document).ready(function () {
+    getPagination('#Table');
+    $('#maxRows option:first-child').prop('selected', true).trigger('change');
+  });
+
+  function getPagination(table) {
+
+    $('#maxRows').on('change', function(e) {
+      $('.pagination').html(''); // reset pagination
+      var trnum = 0; // reset tr counter
+      var maxRows = parseInt($(this).val()); // get Max Rows from select option
+      var totalRows = $(table + ' tbody tr').length; // numbers of rows
+      $(table + ' tr:gt(0)').each(function() { // each TR in  table and not the header
+        trnum++; // Start Counter
+        if (trnum > maxRows) { // if tr number gt maxRows
+
+          $(this).hide(); // fade it out
+        }
+        if (trnum <= maxRows) {
+          $(this).show();
+        } // else fade in Important in case if it ..
+      }); //  was fade out to fade it in
+      if (totalRows > maxRows) { // if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+        //	numbers of pages
+        for (var i = 1; i <= pagenum;) { // for each page append pagination li
+          $('.pagination').append('<li class="page-item" data-page="' + i + '">\
+              <button class="btn btn-outline-info">' + i++ + '</button>\
+  </li>').show();
+        } // end for i
+      } // end if row count > max rows
+      $('.pagination li:first-child').addClass('active'); // add active class to the first li
+      $('.pagination li').on('click', function() { // on click each page
+        var pageNum = $(this).attr('data-page'); // get it's number
+        var trIndex = 0; // reset tr counter
+        $('.pagination li').removeClass('active'); // remove active class from all li
+        $(this).addClass('active'); // add active class to the clicked
+        $(table + ' tr:gt(0)').each(function() { // each tr in table not the header
+          trIndex++; // tr index counter
+          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+          if (trIndex > (maxRows * pageNum) || trIndex <= ((maxRows * pageNum) - maxRows)) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          } //else fade in
+        }); // end of for each tr in table
+      }); // end of on click pagination list
+
+
+    });
+
+    // end of on select change
+    $('li').click(function() {
+      $(this).addClass('active').siblings().removeClass('active');
+    });
+
+
+    // END OF PAGINATION
+  }
+
+  </script>
+{% endblock %}

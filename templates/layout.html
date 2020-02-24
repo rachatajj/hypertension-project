@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<style media="screen">
+  a , label , th , td{
+    font-size: 20px;
+  }
+</style>
+  <head>
+    <meta charset="utf-8">
+    <title>Hypertension</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/16d901c398.js" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    {% include 'includes/navbar.html' %}
+    <div class="container">
+    {% include 'includes/message.html' %}
+    {% block body %}{% endblock %}
+
+    </div>
+    <footer>
+      {% include 'includes/footer.html' %}
+
+    </footer>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

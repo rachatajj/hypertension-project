@@ -1,0 +1,82 @@
+<style type="text/css" rel="stylesheet">
+
+.container{
+width: 980px;
+padding: 40px;
+margin: 0px auto;
+border: 1px solid #fff;
+background: #fff;
+}
+
+
+
+/* nav a,nav a:hover{
+padding: 5px 8px;
+margin-right: 10px;
+text-decoration: none;color:#333;
+} */
+
+nav a.active,nav a:hover {
+border-bottom: 3px solid rgba(255,50,30,1);
+
+}
+</style>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:#003366">
+  <li class="navbar-brand" href="#"><img src="https://sv1.picz.in.th/images/2019/12/22/iXSoRI.png" alt="logo"></li>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsSupportedContent" aria-controls="navbarsSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsSupportedContent">
+    <ul class="navbar-nav mr-auto">
+{% if session.logged_in %}
+        <a class="nav-item nav-link" style="color:white" href="/home">ประเมินอาการ</a>
+        <a class="nav-item nav-link" style="color:white" href="/history">ประวัติการประเมิน</a>
+        <a class="nav-item nav-link" style="color:white" href="/dashboard">แผนภาพ</a>
+
+      {% endif %}
+    </ul>
+
+    <ul class="navbar-nav">
+{% if session.logged_in %}
+<a class="nav-item nav-link" style="color:white" href="/update">แก้ไขข้อมูลส่วนตัว</a>
+<a class="nav-item nav-link" style="color:white" href="/changepsswrd">เปลี่ยนรหัสผ่าน</a>
+{% if session.isAdmin %}
+<li class="nav-item active">
+  <a class="nav-link" style="color:white" href="/backoffice">จัดการโมเดล</a>
+</li>
+{% endif %}
+<a class="nav-item nav-link" style="color:white" href="/logout">ออกจากระบบ</a>
+
+<li class="nav-item dropdown-right dropleft">
+        <a class="nav-link dropdown-toggle" style="color:white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          สวัสดี : {{session.username}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item fas fa-history" href="/history"> ประวัติการประเมิน</a>
+          <a class="dropdown-item fas fa-user-edit" href="/update"> แก้ไขข้อมูลส่วนตัว</a>
+          <a class="dropdown-item fas fa-cog" href="/changepsswrd"> เปลี่ยนรหัสผ่าน</a>
+          {% if session.isAdmin %}
+            <a class="dropdown-item fas fa-ellipsis-h"  href="/backoffice"> จัดการโมเดล</a>  
+          {% endif %}
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item fa fa-sign-out" href="/logout"> ออกจากระบบ</a>
+        </div>
+      </li>
+      {% else %}
+      <li class="nav-item active">
+        <a class="nav-link fas fa-id-card-alt"  style="color:white" href="/register"> สมัครสมาชิก</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link fas fa-sign-in-alt"  style="color:white" href="/login"> เข้าสู่ระบบ</a>
+      </li>
+      {% endif %}
+    </ul>
+
+  </div>
+</nav>

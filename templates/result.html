@@ -1,0 +1,104 @@
+{% extends 'layout.html' %}
+{% block body %}
+<style media="screen">
+  @media (min-width: 768px) {
+    .container {
+      max-width: 800px;
+      background-color: transparent;
+      border:none;
+    }
+  }
+  .container-narrow > hr {
+    margin: 30px 0;
+  }
+  </style>
+  <body>
+
+<div class="container">
+    <center><h1 class="well">ผลการประเมินอาการและระดับความรุนแรงของโรคความดันโลหิตสูง</h1></center>
+<hr>
+	<div class="col-lg-12 well">
+	<div class="row">
+				<form action="" method="POST" style="padding-top:50px">
+					<div class="col-sm-12">
+            <div class="row">
+							<div class="col-sm-6 form-group">
+								<label>ชื่อ-นามสกุล : {{name}}</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label>ความดันโลหิตตัวหน้า: </label>
+                <label>{{sys}} มิลลิเมตรปรอท</label>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>ความดันโลหิตตัวหลัง : </label>
+                <label>{{dia}} มิลลิเมตรปรอท</label>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 form-group">
+                <label>อัตราการเต้นของหัวใจ : </label>
+                <label>{{hr}}</label>
+
+							</div>
+							<div class="col-sm-6 form-group">
+                <label>ดัชนีมวลกาย : </label>
+                <label>{{bmi}}</label>
+							</div>
+						</div>
+            <hr>
+            <div class="row">
+							<div class="col-sm-6 form-group">
+								<label>ผลการประเมินอาการ : </label>
+                <label id="result" name="result">{{result}}</label>
+                <script>
+                  var rs =document.getElementById('result');
+                  if (rs.innerHTML == "ไม่ปกติ") {
+                    rs.style.fontSize = "25px";
+                    rs.style.color = "red";
+                  } else {
+                    rs.style.fontSize = "25px";
+                    rs.style.color = "green";
+                }
+                </script>
+
+							</div>
+							<div class="col-sm-6 form-group">
+                <label>ระดับความรุนแรง : </label>
+                <label id="phase">{{phase}}</label>
+                <script>
+                  var phase =document.getElementById('phase');
+                  if (phase.innerHTML == "ค่อนข้างสูง") {
+                    phase.style.fontSize = "25px";
+                    phase.style.color = "#FFCC00";
+                  } else if(phase.innerHTML == "ความดันโลหิตสูงระดับที่ 1") {
+                    phase.style.fontSize = "25px";
+                    phase.style.color = "#FF6600";
+                  }else if(phase.innerHTML == "ความดันโลหิตสูงระดับที่ 2") {
+                    phase.style.fontSize = "25px";
+                    phase.style.color = "red";
+                  }else if(phase.innerHTML == "ความดันโลหิตสูงระดับที่ 3") {
+                    phase.style.fontSize = "25px";
+                    phase.style.color = "red";
+                  }
+                </script>
+							</div>
+						</div>
+            <div class="row">
+							<div class="col-sm-12 form-group">
+								<label>คำแนะนำ - </label>
+                <label>{{recommend}}</label>
+							</div>
+						</div>
+              <a href="/home"><button type="button" class="btn btn-lg btn-info btn-block">กลับไปหน้าประเมินอาการ</button></a>
+
+					</div>
+				</form>
+				</div>
+	</div>
+	</div>
+  </body>
+ {% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<style media="screen">
+
+    @media (min-width: 768px) {
+      .container {
+        max-width: 730px;
+        background-color: transparent;
+        border:none;
+      }
+    }
+    .container-narrow > hr {
+      margin: 30px 0;
+    }
+
+
+</style>
+
+<div class="container">
+<center><h1>เปลี่ยนรหัสผ่าน</h1></center>
+<hr>
+  {% from "includes/formhelpers.html" import render_field %}
+<form style="padding-top:50px;height:560px;widht:500px" action="{{ url_for('changepsswrd') }}" class="table-info" method="POST">
+
+  <div class="row">
+  <div class="col-sm-12 form-group" style="width: 70%;">
+    <label style="padding-left:100px;">รหัสผ่านเดิม</label>
+    <center><div class="form-group" style="width: 70%;">
+    <input type="password" name="oldpsswrd" class="form-control" style="font-size:20px" >
+    </div></center>
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="col-sm-12 form-group">
+    <label style="padding-left:100px;">รหัสผ่านใหม่</label>
+    <center><div class="form-group" style="width: 70%;font-size:20px">
+      {{render_field(form.password, class_="form-control" )}}
+    </div></center>
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="col-sm-12 form-group">
+    <label style="padding-left:100px;">ยืนยันรหัสผ่านใหม่</label>
+    <center><div class="form-group" style="width: 70%;font-size:20px">
+      {{render_field(form.confirm, class_="form-control")}}
+    </div></center>
+  </div>
+  <div style="padding-left:28px;">
+<button type="submit" class="btn btn-lg btn-warning btn-block" style="width:620px;color:white">เปลี่ยน</button>
+</div>
+  <div style="padding:5px 0px 0px 28px;">
+    <a href="/home"><button type="button" class="btn btn-lg btn-info btn-block" style="width:620px;color:white">ยกเลิก</button></a>
+    </div>
+  </div>
+
+
+
+</form>
+</div>
+
+
+{% endblock %}

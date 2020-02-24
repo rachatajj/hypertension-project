@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+{% block body %}
+<style media="screen">
+  @media (min-width: 768px) {
+    .container {
+      max-width: 970px;
+      background-color: transparent;
+      border:none;
+    }
+  }
+  .container-narrow > hr {
+    margin: 30px 0;
+  }
+
+body {
+  /* background-color:#00CC99; */
+ /* background-image: url("https://sv1.picz.in.th/images/2019/12/27/iFgeC1.png");
+
+ background-repeat: norepeat-y; */
+}
+</style>
+<body>
+<div class="container" >
+    <center><h1 class="well" id="head" >ประเมินอาการและระดับความรุนแรงของโรคความดันโลหิตสูง</h1></center>
+<hr>
+
+	<div class="col-lg-12 well" style="padding-top:42px;">
+	<div class="row">
+
+				<form action="{{ url_for('home') }}"  class="table-info" method="POST" style="padding-top:50px;height:490px;">
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label>ชื่อ-นามสกุล</label>
+								<input type="text" name="name" class="form-control"  style="background-color:white;font-size:20px" value="{{ name }}" disabled>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>อายุ</label>
+								<input type="text"  name="age" style="background-color:white;font-size:20px" class="form-control" value="{{age}}" disabled>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4 form-group">
+								<label>เพศ</label>
+								<input type="text" name="sex" style="background-color:white;font-size:20px" class="form-control" value="{{ sex }}" disabled>
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>หมู่เลือด</label>
+								<input type="text"  name="blood_type" style="background-color:white;font-size:20px" class="form-control" value="{{ blood_type }}" disabled>
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>ดัชนีมวลกาย</label>
+								<input type="text" name="bmi" style="background-color:white;font-size:20px" class="form-control" value="{{ bmi }}" disabled>
+							</div>
+						</div>
+            <hr>
+
+            <div class="row">
+							<div class="col-sm-4 form-group">
+								<label>SYS (มิลลิเมตรปรอท)</label>
+								<input type="number" id="sys" name="sys"  required="required" pattern="[0-9]{1,5}" class="form-control" style="font-size:20px" placeholder="ความดันโลหิตตัวหน้า">
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>DIA (มิลลิเมตรปรอท)</label>
+								<input type="number"  id="dia" name="dia" required="required" pattern="[0-9]{1,5}" class="form-control" style="font-size:20px"  placeholder="ความดันโลหิตตัวหลัง" >
+							</div>
+              <div class="col-sm-4 form-group">
+              <label>อัตราการเต้นของหัวใจ</label>
+              <input type="number"  id="hr" name="hr" required="required" pattern="[0-9]{1,5}" class="form-control" style="font-size:20px" >
+              </div>
+						</div>
+
+              <button type="submit" class="btn btn-lg btn-info btn-block" >ประเมิน</button>
+					</div>
+				</form>
+        <div class="col-sm-6 form-group">
+          <label style="font-size:14px;color:grey;">อัพเดทโมเดลประเมินอาการล่าสุด : {{ dateModel1 }}  </label>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label style="font-size:14px;color:grey;">อัพเดทโมเดลประเมินระดับความรุนแรงล่าสุด : {{ dateModel2 }}  </label>
+            </div>
+
+        </div>
+	</div>
+
+
+
+  </div>
+  </body>
+
+ {% endblock %}
