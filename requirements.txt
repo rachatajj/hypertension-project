@@ -19,7 +19,7 @@ numpy==1.17.2
 pandas==0.25.1
 passlib==1.7.1
 procfile==0.1.0
-protobuf==3.11.0
+protobuf==3.18.3
 PyMySQL==0.9.3
 pyparsing==2.4.2
 python-dateutil==2.8.0
